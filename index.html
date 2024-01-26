@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <script src="script.js"></script>
+        <title>New Tab</title>
+    </head>
+
+    <body>
+        <div id="background-image"></div>
+        <div id="firefox-container">
+            <img src="src/images/Firefox_logo.png" class="firefox-icon">
+            <h1>FireFox</h1>
+            <input type="text" id="search-bar" placeholder="search with google" onkeydown="handleSearch(event)">
+            
+            <div id="shortcut-buttons">
+                <!-- Dynamically generated buttons will go here -->
+            </div>
+            <button id="addShortcutButton" style="width: 30px; height: 30px;">+</button>
+        </div>
+
+        <div id="overlay" class="overlay" style="display: none;"></div>
+
+        <div id="addShortcutMenu" class="shortcut-menu" style="display: none;">
+            <input type="text" id="newShortcutName" placeholder="Name">
+            <input type="text" id="newShortcutUrl" placeholder="URL">
+            <br>
+            <button id="confirmAddShortcut">Add</button>
+            <button id="backShortcutButton">Back</button>
+        </div>
+
+        <h1 id="time-text"  data-component="time"></h1>
+
+        <script>
+            // Get parameters from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageURL = urlParams.get('v');
+
+        if (imageURL) {
+            const backgroundImage = document.getElementById('background-image');
+            backgroundImage.style.backgroundImage = `url(${decodeURIComponent(imageURL)})`;
+        }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                createShortcutButtons();
+                document.getElementById('addShortcutButton').addEventListener('click', toggleAddShortcutMenu);
+                document.getElementById('backShortcutButton').addEventListener('click', toggleAddShortcutMenu);
+                document.getElementById('confirmAddShortcut').addEventListener('click', addNewShortcut);
+            });
+        </script>
+    </body>
+</html>

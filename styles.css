@@ -1,0 +1,175 @@
+/* Global styles */
+
+
+body {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgb(25,25,25);
+
+    user-select: none;
+}
+
+#background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1; /* Ensure the background is behind the overlay */
+}
+
+
+/* Overlay styles */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    pointer-events: none;
+}
+
+body.overlay-active {
+    overflow: hidden;
+}
+
+/* Firefox container styles */
+#firefox-container {
+    width: 500px;
+    position: relative;
+    text-align: center;
+    background: rgba(20,20,20);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.592);
+    z-index: 1;
+    transition: all 0.5s;
+}
+
+#firefox-container:hover {
+    background: rgba(30,30,30);
+    transform: scale(1.05);
+}
+
+/* Shortcut button styles */
+.shortcut-button {
+    display: inline-block;
+    margin: 20px 10px;
+    padding: 10px;
+    background-color: rgb(25,25,25);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.864);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.shortcut-button:hover {
+    background-color: rgb(30,30,30);
+}
+
+/* Shortcut menu styles */
+.shortcut-menu {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(20, 20, 20);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
+    border-radius: 10px;
+    height: 200px;
+    width: 300px;
+    z-index: 4;
+    pointer-events: auto;
+}
+
+.shortcut-menu input,
+.shortcut-menu button {
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    text-align: center;
+    font-size: large;
+    color: white;
+    background-color: rgb(25, 25, 25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
+    margin: 5px;
+    padding: 5px;
+}
+
+/* Button styles */
+button {
+    margin-top: 20px;
+    background-color: rgb(25, 25, 25);
+    color: white;
+    font-size: large;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
+    border: 0;
+    transition: background-color .5s;
+}
+
+button:hover {
+    background-color: rgb(30, 30, 30);
+}
+
+/* Heading styles */
+h1 {
+    color:white;
+    text-shadow: 0 0 10px black;
+    margin-top: 10px;
+    text-align: center;
+    transition: all 1s;
+}
+
+h1:hover {
+    text-shadow: 0 0 10px white;
+}
+
+/* Firefox icon styles */
+.firefox-icon {
+    height: 35px;
+    width: 35px;
+    align-items: center;
+    transition: transform 1s;
+}
+
+.firefox-icon:hover {
+    transform: rotate(360deg);
+}
+
+/* Search bar styles */
+#search-bar {
+    padding: 10px;
+    width: 300px;
+    background-color: rgb(25,25,25);
+    color: white;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 500;
+    text-align: center;
+    text-shadow: 0 0 5px rgb(255, 255, 255, 0.7);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.864);
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    transition: width 0.5s, background-color 0.5s;
+}
+
+#search-bar:hover {
+    background-color: rgb(30,30,30);
+}
+
+#search-bar:focus {
+    width: 400px;
+    background-color: rgb(20,20,20);
+}
