@@ -5,51 +5,67 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" type="text/css" href="styles.css" />
-        <script src="script.js"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <title>New Tab</title>
     </head>
-
+    
     <body>
         <div id="background-image"></div>
-        <div id="firefox-container">
-            <img src="src/images/Firefox_logo.png" class="firefox-icon">
-            <h1>FireFox</h1>
+
+        <nav class="sidebar close">
+            <header>
+                <div class="text header-text">
+                    <h1 class="text"><i class='bx bx-cog'></i>gooseo's tab</h1>
+                </div>
+            </header>
+
+            <div class="side-menu-bar">
+                <div class="side-menu">
+                    <div class="side-menu-buttons">
+                        <button id="addShortcutButton" style="width: 140px; height: 30px;">add shortcut</button>
+                        <br>
+                        <button id="addBackgroundButton" style="width: 140px; height: 30px;">background</button>
+                    </div>  
+
+                    <div class="side-menu-background-gallery">
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="main-container">
+            
+            <img id="browser-icon" class="icon">
+            <h1 id="tab-title">FireFox</h1>
+            
             <input type="text" id="search-bar" placeholder="search with google" onkeydown="handleSearch(event)">
             
-            <div id="shortcut-buttons">
+            <div id="shortcut-buttons" class="shortcut-container">
                 <!-- Dynamically generated buttons will go here -->
             </div>
-            <button id="addShortcutButton" style="width: 30px; height: 30px;">+</button>
+
         </div>
 
         <div id="overlay" class="overlay" style="display: none;"></div>
 
-        <div id="addShortcutMenu" class="shortcut-menu" style="display: none;">
+        <div id="addShortcutMenu" class="menu" style="display: none;">
             <input type="text" id="newShortcutName" placeholder="Name">
             <input type="text" id="newShortcutUrl" placeholder="URL">
             <br>
             <button id="confirmAddShortcut">Add</button>
             <button id="backShortcutButton">Back</button>
         </div>
-
-        <h1 id="time-text"  data-component="time"></h1>
-
-        <script>
-            // Get parameters from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const imageURL = urlParams.get('v');
-
-        if (imageURL) {
-            const backgroundImage = document.getElementById('background-image');
-            backgroundImage.style.backgroundImage = `url(${decodeURIComponent(imageURL)})`;
-        }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                createShortcutButtons();
-                document.getElementById('addShortcutButton').addEventListener('click', toggleAddShortcutMenu);
-                document.getElementById('backShortcutButton').addEventListener('click', toggleAddShortcutMenu);
-                document.getElementById('confirmAddShortcut').addEventListener('click', addNewShortcut);
-            });
-        </script>
+        <div id="backgroundMenu" class="menu" style="display: none;">
+            <div id="background-gallery">
+                <!-- Dynamically generated background buttons will go here -->
+              </div>
+              
+            <input type="text" id="newBackgroundUrl" placeholder="URL">
+            <br>
+            <button id="confirmAddBackground">Add</button>
+            <button id="backBackgroundButton">Back</button>
+        </div>
     </body>
+    <script src="script.js"></script>
 </html>
