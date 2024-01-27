@@ -1,53 +1,59 @@
 function getBrowserType() {
-    const test = regexp => {
-      return regexp.test(navigator.userAgent);
-    };
-  
+    const test = regexp => regexp.test(navigator.userAgent);
     console.log(navigator.userAgent);
-  
-    if (test(/opr\//i) || !!window.opr) {
-      return 'Opera';
-    } else if (test(/edg/i)) {
-      return 'Microsoft Edge';
-    } else if (test(/chrome|chromium|crios/i)) {
-      return 'Google Chrome';
-    } else if (test(/firefox|fxios/i)) {
-      return 'Mozilla Firefox';
-    } else if (test(/safari/i)) {
-      return 'Apple Safari';
-    } else if (test(/trident/i)) {
-      return 'Microsoft Internet Explorer';
-    } else if (test(/ucbrowser/i)) {
-      return 'UC Browser';
-    } else if (test(/samsungbrowser/i)) {
-      return 'Samsung Browser';
-    } else {
-      return 'Unknown browser';
+
+    const browserTypes = {
+        "opr": "Opera",
+        "edg": "Edge",
+        "chrome|chromium|crios": "Chrome",
+        "firefox|fxios": "Firefox",
+        "safari": "Safari",
+        "trident": "Internet Explorer",
+        "ucbrowser": "UC Browser",
+        "samsungbrowser": "Samsung Browser",
+    };
+
+    for (const [pattern, browser] of Object.entries(browserTypes)) {
+        if (test(new RegExp(pattern, 'i')) || window[browser.toLowerCase()]) {
+            return browser;
+        }
     }
-  }
+
+    return 'Unknown browser';
+}
+
+
+async function validateUrl(url) {
+    try {
+        const response = await fetch(url);
+        return { result: url };
+    } catch (err) {
+        const error = {
+            code: 'Fetching image',
+            message: 'Something went wrong.',
+            rawError: err,
+        };
+        console.log(error);
+        return [1, { error }];
+    }
+}
 
 var browser = getBrowserType();
 const browserIcon = document.getElementById('browser-icon');
 const tabTitle = document.getElementById('tab-title');
 
-if (browser == "Mozilla Firefox") {
-    browserIcon.src = 'src/images/firefox-icon.png';
-    tabTitle.innerText = "firefox";
-} else if (browser == "Opera") {
-    browserIcon.src = 'src/images/opera-icon.png'; 
-    tabTitle.innerText = "opera";
-} else if (browser == "Apple Safari") {
-    browserIcon.src = 'src/images/safari-icon.png'; 
-    tabTitle.innerText = "safari";
-} else if (browser == "Microsoft INternet Explorer") {
-    browserIcon.src = 'src/images/ie-icon.png';
-    tabTitle.innerText = "internet explorer?";
-} else if (browser == "Microsoft Edge") {
-    browserIcon.src = 'src/images/edge-icon.png'; 
-    tabTitle.innerText = "edge";
-} else if (browser == "Google Chrome") {
-    browserIcon.src = 'src/images/chrome-icon.png';
-    tabTitle.innerText = "chrome";
+const browserIcons = {
+    "Firefox": 'src/images/firefox-icon.png',
+    "Opera": 'src/images/opera-icon.png',
+    "Safari": 'src/images/safari-icon.png',
+    "Internet Explorer": 'src/images/ie-icon.png',
+    "Edge": 'src/images/edge-icon.png',
+    "Chrome": 'src/images/chrome-icon.png',
+};
+
+if (browser in browserIcons) {
+    browserIcon.src = browserIcons[browser];
+    tabTitle.innerText = browser.toLowerCase();
 } else {
     tabTitle.innerText = "unknown";
 }
@@ -57,10 +63,9 @@ if (browser == "Mozilla Firefox") {
 
 
 let shortcutButtonsData = JSON.parse(localStorage.getItem('shortcutButtons')) || [];
+const shortcutButtonsContainer = document.getElementById('shortcut-buttons');
 
 function createShortcutButtons() {
-    const shortcutButtonsContainer = document.getElementById('shortcut-buttons');
-
     shortcutButtonsContainer.innerHTML = '';
 
     shortcutButtonsData.forEach(button => {
@@ -81,7 +86,7 @@ function createShortcutButtons() {
         });
 
         shortcutButton.addEventListener('click', function(event) {
-            if (event.button === 1) { // Middle click
+            if (event.button === 1) { 
                 event.preventDefault();
                 removeShortcut(button);
             } else {
@@ -102,21 +107,6 @@ function removeShortcut(button) {
         createShortcutButtons();
     }
 }
-function toggleAddShortcutMenu() {
-    const addShortcutMenu = document.getElementById('addShortcutMenu');
-    const overlay = document.getElementById('overlay');
-    const body = document.body;
-
-    if (addShortcutMenu.style.display === 'none') {
-        addShortcutMenu.style.display = 'block';
-        overlay.style.display = 'block';
-        body.classList.add('overlay-active');
-    } else {
-        addShortcutMenu.style.display = 'none';
-        overlay.style.display = 'none';
-        body.classList.remove('overlay-active');
-    }
-}
 
 function addNewShortcut() {
     const newName = document.getElementById('newShortcutName').value;
@@ -130,7 +120,7 @@ function addNewShortcut() {
 
     document.getElementById('newShortcutName').value = '';
     document.getElementById('newShortcutUrl').value = '';
-    toggleAddShortcutMenu();
+    toggleMenu("addShortcutMenu");
 }
 
 
@@ -138,31 +128,73 @@ function addNewShortcut() {
 
 
 let backgroundButtonsData = JSON.parse(localStorage.getItem('backgrounds')) || [];
+const backgroundGalleryContainer = document.getElementById('side-menu-gallery');
 
 function createBackgroundButtons() {
-    const backgroundGalleryContainer = document.getElementById('background-gallery');
-
     backgroundGalleryContainer.innerHTML = '';
 
     backgroundButtonsData.forEach(background => {
-        const backgroundButton = document.createElement('button');
+        const backgroundButton = document.createElement('bg-image');
         backgroundButton.style.backgroundImage = `url(${background.url})`;
         backgroundButton.classList.add('background-button');
 
-        backgroundButton.addEventListener('click', function() {
-            setNewBackground(background.url);
-        });
+        let rightClickCount = 0;
 
-        backgroundGalleryContainer.appendChild(backgroundButton);
+        backgroundButton.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            rightClickCount++;
+            if (rightClickCount === 2) {
+                rightClickCount = 0;
+                removeBackground(background);
+            }
     });
+
+    backgroundButton.addEventListener('click', function(event) {
+        if (event.button === 1) { 
+            event.preventDefault();
+            removeBackground(background);
+        } else {
+            rightClickCount = 0;
+
+            setNewBackground(background.url);
+
+            let currentSelectedButton = document.querySelector('.background-button.selected');
+            if (currentSelectedButton) {
+                currentSelectedButton.classList.remove('selected');
+            }
+            this.classList.add('selected');
+        }
+    });
+
+    backgroundGalleryContainer.appendChild(backgroundButton);
+  });
 }
 
 function setNewBackground(url) {
     const backgroundImage = document.getElementById('background-image');
     backgroundImage.style.backgroundImage = `url(${url})`;
+    localStorage.setItem('lastBackground', url);
 }
 
-function removebackground(background) {
+function loadLastBackground() {
+    // Retrieve the last used background URL from local storage
+    const lastBackground = localStorage.getItem('lastBackground');
+
+    if (lastBackground) {
+        setNewBackground(lastBackground);
+
+        const backgroundButtons = document.querySelectorAll('.background-button');
+        backgroundButtons.forEach(button => {
+            if (button.style.backgroundImage === `url(${lastBackground})`) {
+                button.classList.add('selected');
+            } else {
+                button.classList.remove('selected');
+            }
+        });
+    }
+}
+
+function removeBackground(background) {
     const index = backgroundButtonsData.indexOf(background);
     if (index !== -1) {
         backgroundButtonsData.splice(index, 1);
@@ -170,37 +202,22 @@ function removebackground(background) {
         createBackgroundButtons();
     }
 }
-function toggleAddBackgroundMenu() {
-    const backgroundMenu = document.getElementById('backgroundMenu');
-    const overlay = document.getElementById('overlay');
-    const body = document.body;
-
-    if (backgroundMenu.style.display === 'none') {
-        backgroundMenu.style.display = 'block';
-        overlay.style.display = 'block';
-        body.classList.add('overlay-active');
-    } else {
-        backgroundMenu.style.display = 'none';
-        overlay.style.display = 'none';
-        body.classList.remove('overlay-active');
-    }
-}
 
 function addNewBackground() {
     const newUrl = document.getElementById('newBackgroundUrl').value;
 
-    backgroundButtonsData.push({ name: newName, url: newUrl });
-
-    localStorage.setItem('backgrounds', JSON.stringify(backgroundButtonsData));
-
-    createBackgroundButtons();
-
-    document.getElementById('newBackgroundUrl').value = '';
-    toggleAddBackgroundMenu();
+    try{
+        if (validateUrl(newUrl)) { // check if URL is valid image
+            backgroundButtonsData.push({ url: newUrl });
+            localStorage.setItem('backgrounds', JSON.stringify(backgroundButtonsData));
+            createBackgroundButtons();
+            document.getElementById('newBackgroundUrl').value = '';
+            toggleMenu('backgroundMenu');
+        } 
+    } catch(err) {
+        alert(err);
+    }
 }
-
-window.addEventListener('load', createBackgroundButtons);
-window.addEventListener('load', createShortcutButtons);
 
 function handleSearch(event) {
     if (event.key === 'Enter') {
@@ -213,11 +230,25 @@ function handleSearch(event) {
 const body = document.querySelector("body");
 const sidebar = body.querySelector(".sidebar");
 
-document.addEventListener('mousemove', function(event) {
-    const mouseX = event.clientX;
+function toggleMenu(menuId) {
+    const menu = document.getElementById(menuId);
+    const overlay = document.getElementById('overlay');
+    const body = document.body;
 
-    // Set a threshold (e.g., 50 pixels) to determine the left side
-    const leftThreshold = 350;
+    if (menu.style.display === 'none') {
+        menu.style.display = 'block';
+        overlay.style.display = 'block';
+        body.classList.add('overlay-active');
+    } else {
+        menu.style.display = 'none';
+        overlay.style.display = 'none';
+        body.classList.remove('overlay-active');
+    }
+}
+
+document.addEventListener('mousemove', function (event) {
+    const mouseX = event.clientX;
+    const leftThreshold = 250;
 
     if (mouseX < leftThreshold) {
         if (sidebar.classList.contains("close")) {
@@ -230,22 +261,21 @@ document.addEventListener('mousemove', function(event) {
     }
 });
 
-// Get parameters from the URL
-const urlParams = new URLSearchParams(window.location.search);
-const imageURL = urlParams.get('v');
+window.addEventListener('load', function () {
+    loadLastBackground();
+});
 
-if (imageURL) {
-    const backgroundImage = document.getElementById('background-image');
-    backgroundImage.style.backgroundImage = `url(${decodeURIComponent(imageURL)})`;
-}
+document.getElementById('search-bar').addEventListener('keydown', handleSearch);
 
 document.addEventListener('DOMContentLoaded', function () {
+    createBackgroundButtons();
     createShortcutButtons();
-    document.getElementById('addShortcutButton').addEventListener('click', toggleAddShortcutMenu);
-    document.getElementById('backShortcutButton').addEventListener('click', toggleAddShortcutMenu);
-    document.getElementById('confirmAddShortcut').addEventListener('click', addNewShortcut);
 
-    document.getElementById('addBackgroundButton').addEventListener('click', toggleAddBackgroundMenu);
-    document.getElementById('backBackgroundButton').addEventListener('click', toggleAddBackgroundMenu);
-    document.getElementById('confirmAddBackground').addEventListener('click', addNewBackground);
+    document.getElementById('addShortcutButton').addEventListener('click', () => toggleMenu('addShortcutMenu'));
+    document.getElementById('backShortcutButton').addEventListener('click', () => toggleMenu('addShortcutMenu'));
+    document.getElementById('confirmAddShortcut').addEventListener('click', addNewShortcut);
+    
+    document.getElementById('addBackgroundButton').addEventListener('click', () => toggleMenu('backgroundMenu'));
+    document.getElementById('backBackgroundButton').addEventListener('click', () => toggleMenu('backgroundMenu'));
+    document.getElementById('confirmAddBackground').addEventListener('click', addNewBackground);    
 });
