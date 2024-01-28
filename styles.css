@@ -159,11 +159,6 @@ body.overlay-active {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.shortcut-button:hover {
-    background-color: rgb(30, 30, 30, 0.576);
-    transform: scale(1.05);
-}
-
 .menu input, .menu button {
     border-radius: 10px;
     outline: none;
@@ -288,7 +283,13 @@ header h1 {
     transition: all 0.3s;
 }
 
-.background-button:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
-    border-radius: 5px;
+.button:hover, .shortcut-button:hover {
+    background-color: rgb(30, 30, 30, 0.576);
+    transform: scale(1.05);
+
+    transition: all 0.3s;
+}
+
+.background-button.dragging {
+    opacity: .15;  
 }

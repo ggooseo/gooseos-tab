@@ -130,13 +130,24 @@ function addNewShortcut() {
 let backgroundButtonsData = JSON.parse(localStorage.getItem('backgrounds')) || [];
 const backgroundGalleryContainer = document.getElementById('side-menu-gallery');
 
+
 function createBackgroundButtons() {
     backgroundGalleryContainer.innerHTML = '';
-
+    
     backgroundButtonsData.forEach(background => {
         const backgroundButton = document.createElement('bg-image');
-        backgroundButton.style.backgroundImage = `url(${background.url})`;
         backgroundButton.classList.add('background-button');
+        backgroundButton.style.backgroundImage = `url(${background.url})`;
+        backgroundButton.setAttribute("draggable", 'true');
+
+        // add listner for when to start and end dragging
+        backgroundButton.addEventListener("dragstart", () => {
+            backgroundButton.classList.add("dragging");
+        });
+    
+        backgroundButton.addEventListener("dragend", () => {
+            backgroundButton.classList.remove("dragging");
+        });
 
         let rightClickCount = 0;
 
@@ -157,7 +168,7 @@ function createBackgroundButtons() {
             rightClickCount = 0;
 
             setNewBackground(background.url);
-
+            
             let currentSelectedButton = document.querySelector('.background-button.selected');
             if (currentSelectedButton) {
                 currentSelectedButton.classList.remove('selected');
@@ -165,10 +176,11 @@ function createBackgroundButtons() {
             this.classList.add('selected');
         }
     });
-
+    
     backgroundGalleryContainer.appendChild(backgroundButton);
-  });
+    });
 }
+
 
 function setNewBackground(url) {
     const backgroundImage = document.getElementById('background-image');
@@ -219,6 +231,12 @@ function addNewBackground() {
     }
 }
 
+function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', '');  // necessary for Firefox
+    event.target.classList.add('dragging');
+}
+
+// SEARCH
 function handleSearch(event) {
     if (event.key === 'Enter') {
         const searchTerm = document.getElementById('search-bar').value;
@@ -278,4 +296,26 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('addBackgroundButton').addEventListener('click', () => toggleMenu('backgroundMenu'));
     document.getElementById('backBackgroundButton').addEventListener('click', () => toggleMenu('backgroundMenu'));
     document.getElementById('confirmAddBackground').addEventListener('click', addNewBackground);    
+
+    // dragging
+
+    const sortableList = document.getElementById('side-menu-gallery');
+
+    const initSortableList = (e) => {
+        e.preventDefault();
+
+        const draggingItem = sortableList.querySelector(".dragging");
+
+        const siblings = [...sortableList.querySelectorAll(".background-button:not(.dragging)")];
+
+        let nextSibling = siblings.find(sibling => {
+            return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+        }) 
+        
+
+        sortableList.insertBefore(draggingItem, nextSibling);
+    }
+
+    sortableList.addEventListener("dragover", initSortableList);
+    sortableList.addEventListener("dragenter", e => e.preventDefault());
 });
