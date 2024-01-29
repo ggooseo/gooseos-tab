@@ -18,7 +18,7 @@
 
 ![Contributors](https://img.shields.io/github/contributors/ggooseo/gooseos-tab?color=dark-green) ![Forks](https://img.shields.io/github/forks/ggooseo/gooseos-tab?style=social) ![Stargazers](https://img.shields.io/github/stars/ggooseo/gooseos-tab?style=social) ![Issues](https://img.shields.io/github/issues/ggooseo/gooseos-tab) 
 
-## About The Project
+## About gooseo's tab
 
 ![Screen Shot](https://github.com/ggooseo/gooseos-tab/blob/main/preview.PNG?raw=true)
 
