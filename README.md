@@ -20,7 +20,7 @@
 
 ## About The Project
 
-![Screen Shot](https://github.com/ggooseo/gooseos-tab/blob/main/github/preview.PNG?raw=true)
+![Screen Shot](https://github.com/ggooseo/gooseos-tab/blob/main/preview.PNG?raw=true)
 
 A custom new tab page instead of your browser's old boring one!
 
