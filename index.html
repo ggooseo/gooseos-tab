@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
     <link rel="stylesheet" href="styles.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>New Tab</title>
@@ -12,6 +11,19 @@
 </head>
 <body>
     <div id="background-image"></div>
+
+    <div class="toast">
+        <div class="toast-content">
+            <i class='bx bx-check check'></i>      
+            <div class="message">
+                <span class="text text-1">Success</span>
+                <span class="text text-2">Your changes has been saved</span>
+            </div>
+        </div>
+
+        <i class='bx bx-x close'></i>
+        <div class="progress active"></div>
+    </div>
 
     <nav class="sidebar close">
         <header>
@@ -89,7 +101,6 @@
             <button id="backSettingsButton" class="button">back</button>
         </div>  
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -327,6 +327,114 @@ body.overlay-active {
     opacity: .15;  
 }
 
+/* TOAST */
+.toast {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    border-radius: 12px;
+    background: var(--background-color);
+    box-shadow: 0 0 10px white;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 0 10px black;
+    overflow: hidden;
+    transform: translateX(calc(100% + 30px));
+    backdrop-filter: blur(5px);
+    transition: all 0.5s;
+}
+
+.toast.active:hover {
+    transform:scale(1.05);
+}
+  
+.toast.active {
+    transform: translateX(0%);
+}
+
+.toast .toast-content {
+    display: flex;
+    align-items: center;
+}
+
+.toast-content .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 35px;
+    background-color: #2770ff;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+.toast-content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.message .text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+}
+
+.message .text.text-1 {
+    font-weight: 600;
+    color: rgb(44, 77, 145);
+}
+
+.toast .close {
+    color: #276fffa5;
+    font-size: 25px;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 1;
+
+    transition: all .5s;
+}
+
+.toast .close:hover {
+    opacity: .5;
+    transform:rotateZ(180deg);
+}
+
+.toast .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+}
+
+.toast .progress:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #2770ff;
+}
+
+.progress.active:before {
+    animation: progress 5s linear forwards;
+}
+
+.toast.active ~ button {
+    pointer-events: none;
+}
+
+@keyframes progress {
+    100% {
+        right: 100%;
+    }
+}
+
 /* MEDIA */
 @media only screen and (max-width: 950px) {
     .background-button,

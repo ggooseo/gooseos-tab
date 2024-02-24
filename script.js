@@ -247,6 +247,8 @@ function addNewBackground() {
 
     try {
         if (validateUrl(newUrl)) { // check if URL is a valid image
+            ShowNotification();
+
             backgroundButtonsData.push({ url: newUrl });
             localStorage.setItem('backgrounds', JSON.stringify(backgroundButtonsData));
             createBackgroundButtons();
@@ -270,7 +272,6 @@ const searchBar = document.getElementById('search-bar');
 function setSearchEngine(engine) {
     searchEngine = engine;
     searchBar.placeholder = 'search with ' + engine;
-
     localStorage.setItem('searchEngine', engine);
 }
 
@@ -325,6 +326,37 @@ window.addEventListener('load', function() {
 
     if (savedSearchEngine != null)
         setSearchEngine(savedSearchEngine);
+});
+
+
+toast = document.querySelector(".toast");
+(closeIcon = document.querySelector(".close")),
+  (progress = document.querySelector(".progress"));
+
+let timer1, timer2;
+
+function ShowNotification(title, description) {
+    toast.classList.add("active");
+    progress.classList.add("active");
+
+    timer1 = setTimeout(() => {
+        toast.classList.remove("active");
+    }, 5000); //1s = 1000 milliseconds
+
+    timer2 = setTimeout(() => {
+        progress.classList.remove("active");
+    }, 5500);
+}
+
+closeIcon.addEventListener("click", () => {
+  toast.classList.remove("active");
+
+  setTimeout(() => {
+    progress.classList.remove("active");
+  }, 300);
+
+  clearTimeout(timer1);
+  clearTimeout(timer2);
 });
 
 
