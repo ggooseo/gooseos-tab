@@ -17,13 +17,18 @@
                 <h1 class="text"><i class='bx bx-cog'></i>gooseo's tab</h1>
             </div>
         </header>
-
+        
         <div class="side-menu-bar">
             <div class="side-menu">
                 <div class="side-menu-buttons">
-                    <button id="addShortcutButton" class="button" style="width: 190px;">add shortcut</button>
-                    <br>
-                    <button id="addBackgroundButton" class="button" style="width: 190px;">background</button>
+                    <button id="addShortcutButton" class="button">add shortcut</button>
+                    <hr>
+                    <button id="addBackgroundButton" class="button">add background</button>
+                    <button id="unsetBackground" class="button">unset background</button>
+                    <button id="clearBackgrounds" class="button">clear backgrounds</button>
+                    <hr>
+
+                    <button id="openSettingsButton" class="button">settings</button>
                 </div>  
                 
                 <div id="side-menu-gallery" class="side-menu-background-gallery"></div>
@@ -41,19 +46,48 @@
     <div id="overlay" class="overlay" style="display: none;"></div>
 
     <div id="addShortcutMenu" class="menu" style="display: none;">
-        <input type="text" id="newShortcutName" placeholder="Name">
-        <input type="text" id="newShortcutUrl" placeholder="URL">
-        <br>
-        <button id="confirmAddShortcut" class="button">Add</button>
-        <button id="backShortcutButton" class="button">Back</button>
-    </div>
-    <div id="backgroundMenu" class="menu" style="display: none;">
-        <input type="text" id="newBackgroundUrl" placeholder="URL">
-        <br>
-        <button id="confirmAddBackground" class="button">Add</button>
-        <button id="backBackgroundButton" class="button">Back</button>
+        <h1>add shortcut</h1>
+        <div class="center">
+            <input type="text" id="newShortcutName" placeholder="Name">
+            <input type="text" id="newShortcutUrl" placeholder="URL">
+            <br>
+            <button id="confirmAddShortcut" class="button">add</button>
+            <button id="backShortcutButton" class="button">back</button>
+        </div>  
     </div>
 
+    <div id="backgroundMenu" class="menu" style="display: none;">
+        <h1>add background</h1>
+        <div class="center">
+            <input type="text" id="newBackgroundUrl" placeholder="URL">
+            <br>
+                <button id="confirmAddBackground" class="button">add</button>
+                <button id="backBackgroundButton" class="button">back</button>
+        </div>  
+    </div>
+
+    <div id="clearBackgroundMenu" class="menu" style="display: none;">
+        <h1>are you sure?</h1>
+        <p>are you sure you want to clear your backgrounds</p>
+        <div class="center">
+            <button id="confirmClearBackground" class="button">clear</button>
+            <button id="backClearBackgroundButton" class="button">back</button>
+        </div>
+    </div>
+
+    <div id="settingsMenu" class="menu" style="display: none;">
+        <h1>settings</h1>
+
+        <p for="searchEngine">search engine</p>
+        <div class="center">
+            <button id="searchEngineGoogle" class="button">google</button>
+            <button id="searchEngineDuckDuckGo" class="button">duckduckgo</button>
+            <button id="searchEngineQwant" class="button">qwant</button>
+            <br>
+            <button id="backSettingsButton" class="button">back</button>
+        </div>  
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

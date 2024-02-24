@@ -10,6 +10,18 @@
     scrollbar-width: none;
 }
 
+/* Define primary and secondary colors */
+:root {
+    --primary-color: rgb(25, 25, 25);
+    --secondary-color: rgba(25, 25, 25, 0.576);
+    --button-color: white;
+    --background-color: rgba(0, 0, 0, 0.706);
+    --background-hover-color: rgba(0, 0, 0, 0.566);
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --search-bar-color: rgba(0, 0, 0, 0.462);
+    --search-bar-hover-color: rgba(20, 20, 20, 0.4);
+}
+
 /* BODY STYLE */
 body {
     overflow: hidden;
@@ -17,17 +29,22 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: rgb(25, 25, 25);
+    background-color: var(--primary-color);
     user-select: none;
+}
+
+.center {
+    display:grid;
+    align-items: center;
+    justify-content: center;
 }
 
 /* BUTTON STYLE */
 .button {
     margin-top: 20px;
-    background-color: rgba(25, 25, 25, 0.576);
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--button-color);
     font-size: large;
-    text-align: center;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
     border: 0;
@@ -50,8 +67,24 @@ h1:hover {
     text-shadow: 0 0 10px white;
 }
 
+p {
+    color:white;
+    text-shadow: 0 0 10px black;
+    text-align: center;
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+p:hover {
+    color: rgb(200,200,200);
+    text-shadow: 0 0 15px white;
+}
+
 .title {
     margin-top: 5px;
+}
+
+hr {
+    margin-top: 20px;
 }
 
 #background-image {
@@ -64,7 +97,7 @@ h1:hover {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    z-index: -1; /* Ensure the background is behind the overlay */
+    z-index: -1;
 }
 
 /* Overlay styles */
@@ -74,7 +107,7 @@ h1:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-color);
     z-index: 3;
 }
 
@@ -82,12 +115,12 @@ body.overlay-active {
     overflow: hidden;
 }
 
-/* Firefox container styles */
+/* container */
 #main-container {
     width: 500px;
     position: relative;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.706);
+    background-color: var(--background-color);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.592);
@@ -100,7 +133,7 @@ body.overlay-active {
 }
 
 #main-container:hover {
-    background-color: rgba(0, 0, 0, 0.566);
+    background-color: var(--background-hover-color);
     transform: scale(1.05);
 }
 
@@ -118,7 +151,7 @@ body.overlay-active {
     margin-top: 20px;
     padding: 10px;
     width: 300px;
-    background-color: rgba(0, 0, 0, 0.462);
+    background-color: var(--search-bar-color);
     color: white;
     font-size: 16px;
     font-weight: 500;
@@ -133,7 +166,7 @@ body.overlay-active {
 
 #search-bar:hover {
     border-radius: 0px;
-    background-color: rgba(20, 20, 20, 0.4);
+    background-color: var(--search-bar-hover-color);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.864);
 }
 
@@ -149,9 +182,9 @@ body.overlay-active {
     margin: 5px;
     height: 30px;
     min-width: 50px;
-    background-color: rgba(25, 25, 25, 0.576);
+    background-color: var(--secondary-color);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.864);
-    color: #fff;
+    color: var(--button-color);
     text-decoration: none;
     border-radius: 5px;
     font-size: 14px;
@@ -165,8 +198,8 @@ body.overlay-active {
     border: none;
     text-align: center;
     font-size: large;
-    color: white;
-    background-color: rgba(25, 25, 25);
+    color: var(--button-color);
+    background-color: var(--secondary-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
     margin: 5px;
     padding: 5px;
@@ -175,14 +208,16 @@ body.overlay-active {
 /* menu styles */
 .menu {
     position: absolute;
-    display: flex;
+    display:grid;
     align-items: center;
     justify-content: center;
-    background-color: rgba(37, 37, 37, 0.705);
+    background-color: rgba(15, 15, 15, 0.705);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.864);
     border-radius: 10px;
-    height: 200px;
-    width: 300px;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 500px;
     z-index: 4;
 }
 
@@ -227,13 +262,6 @@ body.overlay-active {
     display: flex;
 }
 
-header .header-text {
-    flex-direction: column;
-}
-
-header h1 {
-    margin-top: 20px;
-}
 
 .bx-cog {
     animation: rotateAnimation 2s ease-out infinite;
@@ -292,4 +320,34 @@ header h1 {
 
 .background-button.dragging {
     opacity: .15;  
+}
+
+/* MEDIA */
+@media only screen and (max-width: 950px) {
+    .background-button,
+    #main-container {
+        width: 99%;
+    }
+
+    #search-bar {
+        width: 100%;
+    }
+
+    .shortcut-button {
+        min-width: 40px;
+    }
+
+    .sidebar {
+        width: 20%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        width: 30%;
+    }
+
+    #main-container {
+        width: 35%;
+    }
 }
