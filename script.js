@@ -8,6 +8,8 @@ const browserIcons = {
     "Chrome": 'src/images/chrome-icon.png',
 };
 
+
+
 function getBrowserType() {
     const test = regexp => regexp.test(navigator.userAgent);
     console.log(navigator.userAgent);
