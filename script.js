@@ -123,6 +123,7 @@ function createShortcutButton(button) {
 }
 
 function removeShortcut(button) {
+    ShowNotification();
     const index = shortcutButtonsData.indexOf(button);
     if (index !== -1) {
         shortcutButtonsData.splice(index, 1);
@@ -132,6 +133,7 @@ function removeShortcut(button) {
 }
 
 function addNewShortcut() {
+    ShowNotification();
     const newName = document.getElementById('newShortcutName').value;
     const newUrl = document.getElementById('newShortcutUrl').value;
 
@@ -192,7 +194,7 @@ function createBackgroundButton(background) {
             rightClickCount = 0;
 
             setNewBackground(background.url);
-
+            ShowNotification();
             let currentSelectedButton = document.querySelector('.background-button.selected');
             if (currentSelectedButton) {
                 currentSelectedButton.classList.remove('selected');
@@ -236,6 +238,7 @@ function loadLastBackground() {
 function removeBackground(background) {
     const index = backgroundButtonsData.indexOf(background);
     if (index !== -1) {
+        ShowNotification();
         backgroundButtonsData.splice(index, 1);
         localStorage.setItem('backgrounds', JSON.stringify(backgroundButtonsData));
         createBackgroundButtons();
