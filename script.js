@@ -42,6 +42,7 @@ function getSearchEngineToUse() {
         "google": "https://www.google.com/search?q=",
         "duckduckgo": "https://duckduckgo.com/?t=h_&q=",
         "qwant": "https://www.qwant.com/?q=",
+        "brave": "https://search.brave.com/search?q=",
     };
 
     for (const [pattern, engine] of Object.entries(searchEngineTypes)) {
@@ -387,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchEngineGoogle').addEventListener('click', () => setSearchEngine('google'));
     document.getElementById('searchEngineDuckDuckGo').addEventListener('click', () => setSearchEngine('duckduckgo'));
     document.getElementById('searchEngineQwant').addEventListener('click', () => setSearchEngine('qwant'));
+    document.getElementById('searchEngineBrave').addEventListener('click', () => setSearchEngine('brave'));
 
     // dragging
     const sortableList = document.getElementById('side-menu-gallery');
