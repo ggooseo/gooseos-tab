@@ -13,10 +13,10 @@
 /* Define primary and secondary colors */
 :root {
     --primary-color: rgb(25, 25, 25);
-    --secondary-color: rgba(25, 25, 25, 0.576);
+    --secondary-color: rgba(25, 25, 25, 0.6);
     --button-color: white;
-    --background-color: rgba(0, 0, 0, 0.706);
-    --background-hover-color: rgba(0, 0, 0, 0.566);
+    --background-color: rgba(0, 0, 0, 0.7);
+    --background-hover-color: rgba(0, 0, 0, 0.6);
     --overlay-color: rgba(0, 0, 0, 0.5);
     --search-bar-image: linear-gradient(to right, rgb(25,25,25), rgb(35,35,35));
     --search-bar-hover-color: rgba(20, 20, 20, 0.4);
@@ -58,6 +58,7 @@ body {
 /* HEADING STYLE */
 h1 {
     color: white;
+    opacity: 0.8;
     text-shadow: 0 0 10px black;
     text-align: center;
     transition: text-shadow 1s ease;
@@ -123,7 +124,7 @@ body.overlay-active {
     background-color: var(--background-color);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.592);
+    box-shadow: 0 0 20px black;
     z-index: 1;
     transition: all 0.5s ease;
     display: flex;
@@ -153,13 +154,13 @@ body.overlay-active {
     padding: 10px;
     width: 300px;
     background-image: var(--search-bar-image);
-    opacity: 0.1;
+    opacity: 0.35;
     color: white;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.339);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.532);
+    box-shadow: 0 0 10px black;
     border-radius: 10px;
     outline: none;
     border: none;
@@ -167,14 +168,14 @@ body.overlay-active {
 }
 
 #search-bar:hover {
-    opacity: 0.7;
+    opacity: 0.5;
     border-radius: 5px;
     background-color: var(--search-bar-hover-color);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.864);
 }
 
 #search-bar:focus {
-    opacity: 0.9;
+    opacity: 0.6;
     width: 400px;
     border-radius: 2.5px;
     background-color: rgba(15, 15, 15, 0.435);
@@ -328,7 +329,7 @@ body.overlay-active {
 }
 
 /* TOAST */
-.toast {
+#notif-toast {
     position: absolute;
     top: 25px;
     right: 30px;
@@ -343,15 +344,15 @@ body.overlay-active {
     transition: all 0.5s;
 }
 
-.toast.active:hover {
+#notif-toast.active:hover {
     transform:scale(1.05);
 }
   
-.toast.active {
+#notif-toast.active {
     transform: translateX(0%);
 }
 
-.toast .toast-content {
+#notif-toast .toast-content {
     display: flex;
     align-items: center;
 }
@@ -380,12 +381,12 @@ body.overlay-active {
     color: #666666;
 }
 
-.message .text.text-1 {
+#notif-title {
     font-weight: 600;
     color: rgb(44, 77, 145);
 }
 
-.toast .close {
+#notif-toast #notif-close {
     color: #276fffa5;
     font-size: 25px;
     position: absolute;
@@ -398,12 +399,12 @@ body.overlay-active {
     transition: all .5s;
 }
 
-.toast .close:hover {
+#notif-toast #notif-close:hover {
     opacity: .5;
     transform:rotateZ(180deg);
 }
 
-.toast .progress {
+#notif-toast #notif-progress {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -411,7 +412,7 @@ body.overlay-active {
     width: 100%;
 }
 
-.toast .progress:before {
+#notif-toast #notif-progress:before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -421,11 +422,11 @@ body.overlay-active {
     background-color: #2770ff;
 }
 
-.progress.active:before {
+#notif-progress.active:before {
     animation: progress 5s linear forwards;
 }
 
-.toast.active ~ button {
+#notif-toast.active ~ button {
     pointer-events: none;
 }
 

@@ -124,7 +124,7 @@ function createShortcutButton(button) {
 }
 
 function removeShortcut(button) {
-    ShowNotification();
+    ShowNotification("Shortcut", "removed shortcut");
     const index = shortcutButtonsData.indexOf(button);
     if (index !== -1) {
         shortcutButtonsData.splice(index, 1);
@@ -134,7 +134,7 @@ function removeShortcut(button) {
 }
 
 function addNewShortcut() {
-    ShowNotification();
+    ShowNotification("Shortcut", "added new shortcut");
     const newName = document.getElementById('newShortcutName').value;
     const newUrl = document.getElementById('newShortcutUrl').value;
 
@@ -195,7 +195,7 @@ function createBackgroundButton(background) {
             rightClickCount = 0;
 
             setNewBackground(background.url);
-            ShowNotification();
+            ShowNotification("Background", "background set");
             let currentSelectedButton = document.querySelector('.background-button.selected');
             if (currentSelectedButton) {
                 currentSelectedButton.classList.remove('selected');
@@ -239,7 +239,7 @@ function loadLastBackground() {
 function removeBackground(background) {
     const index = backgroundButtonsData.indexOf(background);
     if (index !== -1) {
-        ShowNotification();
+        ShowNotification("Background", "removed background");
         backgroundButtonsData.splice(index, 1);
         localStorage.setItem('backgrounds', JSON.stringify(backgroundButtonsData));
         createBackgroundButtons();
@@ -251,7 +251,7 @@ function addNewBackground() {
 
     try {
         if (validateUrl(newUrl)) { // check if URL is a valid image
-            ShowNotification();
+            ShowNotification("Background", "added background");
 
             backgroundButtonsData.push({ url: newUrl });
             localStorage.setItem('backgrounds', JSON.stringify(backgroundButtonsData));
@@ -274,6 +274,8 @@ const settingsMenu = document.getElementById('settingsMenu');
 const searchBar = document.getElementById('search-bar');
 
 function setSearchEngine(engine) {
+    ShowNotification("Search engine", "search engine set to " + engine);
+
     searchEngine = engine;
     searchBar.placeholder = 'search with ' + engine;
     localStorage.setItem('searchEngine', engine);
@@ -333,36 +335,62 @@ window.addEventListener('load', function() {
 });
 
 
-toast = document.querySelector(".toast");
-(closeIcon = document.querySelector(".close")),
-  (progress = document.querySelector(".progress"));
+const toast = document.getElementById("notif-toast");
+const closeIcon = document.getElementById("notif-close");
+const progress = document.getElementById("notif-progress");
 
+let notificationQueue = [];
 let timer1, timer2;
 
 function ShowNotification(title, description) {
-    toast.classList.add("active");
-    progress.classList.add("active");
+    const notification = { title, description };
 
-    timer1 = setTimeout(() => {
-        toast.classList.remove("active");
-    }, 5000); //1s = 1000 milliseconds
+    notificationQueue.push(notification);
 
-    timer2 = setTimeout(() => {
-        progress.classList.remove("active");
-    }, 5500);
+    if (!toast.classList.contains("active")) {
+        displayNextNotification();
+    }
+}
+
+function displayNextNotification() {
+    if (notificationQueue.length != 0) {
+        const { title, description } = notificationQueue.shift();
+
+        if (title != null) {
+            document.getElementById("notif-title").innerText = title;
+        }
+
+        if (description != null) {
+            document.getElementById("notif-description").innerText = description;
+        }
+
+        toast.classList.add("active");
+        progress.classList.add("active");
+
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+
+        timer1 = setTimeout(() => {
+            toast.classList.remove("active");
+        }, 5000);
+
+        timer2 = setTimeout(() => {
+            progress.classList.remove("active");
+            displayNextNotification(); 
+        }, 5500);
+    }
 }
 
 closeIcon.addEventListener("click", () => {
-  toast.classList.remove("active");
+    toast.classList.remove("active");
 
-  setTimeout(() => {
-    progress.classList.remove("active");
-  }, 300);
+    setTimeout(() => {
+        progress.classList.remove("active");
+    }, 300);
 
-  clearTimeout(timer1);
-  clearTimeout(timer2);
+    clearTimeout(timer1);
+    clearTimeout(timer2);
 });
-
 
 document.addEventListener('DOMContentLoaded', function() {
     createBackgroundButtons();

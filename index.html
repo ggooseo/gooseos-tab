@@ -12,17 +12,17 @@
 <body>
     <div id="background-image"></div>
 
-    <div class="toast">
+    <div id="notif-toast">
         <div class="toast-content">
             <i class='bx bx-check check'></i>      
             <div class="message">
-                <span class="text text-1">Success</span>
-                <span class="text text-2">Your changes has been saved</span>
+                <span class="text" id="notif-title">Success</span>
+                <span class="text" id="notif-description">Your changes has been saved</span>
             </div>
         </div>
 
-        <i class='bx bx-x close'></i>
-        <div class="progress active"></div>
+        <i class='bx bx-x' id="notif-close"></i>
+        <div id="notif-progress"></div>
     </div>
 
     <nav class="sidebar close">
